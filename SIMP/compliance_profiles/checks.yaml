@@ -25,6 +25,7 @@ checks:
       - CCI-000366
     oval-ids:
     - xccdf_org:ssgproject:content_rule_set_firewalld_default_zone
+    - set_firewalld_default_zone
   oval:com.puppet.forge.simp.iptables.ignore:
     settings:
       parameter: iptables::ignore
