@@ -77,6 +77,9 @@
 #       443:
 #         apply_to: ipv6
 #
+# @param rules
+#   A hash of ``iptables::rule`` resources.
+#
 # @author https://github.com/simp/pupmod-simp-iptables/graphs/contributors
 #
 class iptables (
@@ -89,7 +92,8 @@ class iptables (
   Boolean                         $default_rules              = true,
   Boolean                         $scanblock                  = false,
   Boolean                         $prevent_localhost_spoofing = true,
-  Optional[Hash]                  $ports                      = undef
+  Optional[Hash]                  $ports                      = undef,
+  Hash                            $rules                      = {},
 ) {
 
   simplib::assert_metadata($module_name)
@@ -137,5 +141,11 @@ class iptables (
 
   if $ports {
     iptables::ports {'iptables': ports => $ports }
+  }
+
+  $rules.each |$key, $value| {
+    iptables::rule { $key:
+      * => $value,
+    }
   }
 }
